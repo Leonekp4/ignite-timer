@@ -1,0 +1,30 @@
+Utilizando o Vite, podemos criar um projeto React com TypeScript de forma rápida e fácil.
+
+Criando a pasta com o Vite - no terminal
+    npm create vite@latest
+    digite o nome do projeto 
+    React > TypeScript
+
+
+No terminal, instale 
+    npm install - dependencias necessárias para o projeto
+    npm i styled-components -
+    npm i @types/styled-components -D -
+
+
+
+Atalhos 
+    npm rum dev - iniciar o projeto
+    Ctrl + C - parar o projeto
+
+
+Significados
+    ? - Opcional
+
+Extensões
+    vscode-styled-components
+    ESLint // não funcionou
+        npm i eslint -D
+        npm i @rocketseat/eslint-config -D
+        npx eslint src 
+        npx eslint src --fix -> Corrigir Problemas Automaticamente
