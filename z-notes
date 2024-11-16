@@ -10,6 +10,8 @@ No terminal, instale
     npm install - dependencias necessárias para o projeto
     npm i styled-components -
     npm i @types/styled-components -D -
+    npm i phosphor-react - 
+    npm i react-router-dom -  Rotas 
 
 
 
@@ -28,3 +30,13 @@ Extensões
         npm i @rocketseat/eslint-config -D
         npx eslint src 
         npx eslint src --fix -> Corrigir Problemas Automaticamente
+
+
+
+Eles são Context Providers e servem para compartilhar informações entre os componentes que estão dentro deles e não produzem nada em tela.
+
+<Outlet />
+
+<NavLink />
+
+styled(baseComponent)
