@@ -13,6 +13,11 @@ No terminal, instale
     npm i phosphor-react - 
     npm i react-router-dom -  Rotas 
 
+Bibliotecas
+   npm i react-hook-form - React Hook Form - Formulário
+   npm i zod - Zod - Validação de dados
+        npm i @hookform/resolvers - Resolvers para o React Hook Form
+
 
 
 Atalhos 
@@ -30,13 +35,3 @@ Extensões
         npm i @rocketseat/eslint-config -D
         npx eslint src 
         npx eslint src --fix -> Corrigir Problemas Automaticamente
-
-
-
-Eles são Context Providers e servem para compartilhar informações entre os componentes que estão dentro deles e não produzem nada em tela.
-
-<Outlet />
-
-<NavLink />
-
-styled(baseComponent)
