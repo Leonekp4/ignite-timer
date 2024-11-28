@@ -1,5 +1,11 @@
 Utilizando o Vite, podemos criar um projeto React com TypeScript de forma rápida e fácil.
 
+Estudar 
+/**
+     * Prop Drilling -> Qunado a gente tem MUITAS propriedade APENAS para comunicação entre componentes
+     * Context API -> Permite compartilhamos informações entre VÁRIOS componentes ao mesmo tempo
+     */
+
 Criando a pasta com o Vite - no terminal
     npm create vite@latest
     digite o nome do projeto 
@@ -37,5 +43,3 @@ Extensões
         npm i @rocketseat/eslint-config -D
         npx eslint src 
         npx eslint src --fix -> Corrigir Problemas Automaticamente
-
-       
