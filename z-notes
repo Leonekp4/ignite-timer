@@ -20,10 +20,12 @@ No terminal, instale
     npm i react-router-dom -  Rotas 
 
 Bibliotecas
-   npm i react-hook-form - React Hook Form - Formulário
-   npm i zod - Zod - Validação de dados
+    npm i react-hook-form - React Hook Form - Formulário
+    npm i zod - Zod - Validação de dados
         npm i @hookform/resolvers - Resolvers para o React Hook Form
     npm i date-fns - Funções de data
+    npm i immer - Immer - Imutabilidade
+ 
 
 
 
@@ -43,3 +45,10 @@ Extensões
         npm i @rocketseat/eslint-config -D
         npx eslint src 
         npx eslint src --fix -> Corrigir Problemas Automaticamente
+
+Sites
+    https://ts-error-translator.vercel.app/ - Traduzir Erros do TypeScript
+
+
+
+   

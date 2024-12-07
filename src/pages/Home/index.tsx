@@ -1,104 +1,75 @@
 import { Play, HandPalm } from "phosphor-react";
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
-import { differenceInSeconds } from 'date-fns';
 
 import { 
     HomeContainer, 
     StartCountdownButton, 
     StopCountdownButton, 
 } from "./styles";
-import { useEffect, useState } from "react";
+
+import { useContext } from "react";
 import { NewCycleForm } from "./Components/NewCycleForm";
 import { Countdown } from "./Components/Coundown";
+import { CyclesContext } from "../../contexts/CyclesContext";
 
+const newCycleFormValidationSchema = zod.object({
+    task: zod.string().min(5, 'Informe a tarefa'),
+    minutesAmount: zod
+        .number()
+        .min(5,'O tempo mínimo é de 5 minutos.')
+        .max(60, 'O tempo máximo é de 60 minutos'),
+})
 
-
-interface Cycle {
-    id: string;
-    task: string;
-    minutesAmount: number;
-    startDate: Date;
-    interruptedDate?: Date;
-    finishedDate?: Date;
-}
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
 export function Home() {
-    const [cycles, setCycles] = useState<Cycle[]>([])
-    const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
+    const { createNewCycle, interruptCurrentCycle, activeCycle } = useContext(CyclesContext)
     
-    const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)  
+    const newCycleForm = useForm<NewCycleFormData>({
+        resolver: zodResolver(newCycleFormValidationSchema),
+        defaultValues: {
+            task: '',
+            minutesAmount: 0,
+        },
+    })
+
+    const { handleSubmit, watch, reset } = newCycleForm; // verificar se tem = depois da const
 
     function handleCreateNewCycle(data: NewCycleFormData) {
-        const id = String(new Date().getTime())
-
-        const newCycle: Cycle = {
-            id,
-            task: data.task,
-            minutesAmount: data.minutesAmount,
-            startDate: new Date(),
-        }
-
-        setCycles((state) => [...state, newCycle])
-        setActiveCycleId(id)
-        setAmountSecondsPassed(0)
-
-        reset(); // para a 'reset' funcionar corretamente, sempre declare as variaveis e, em  'defaultValues:' = task: '', minutesAmount: 0,
+        createNewCycle(data)
+        reset()
     }
-
-
-    function handleInterruptCycle() {
-        setCycles((state) =>
-            state.map(cycle => {
-                if (cycle.id === activeCycleId) {
-                return {...cycle, interruptedDate: new Date()}
-                } else {
-                return cycle
-                }
-            }),
-        )
-
-        setActiveCycleId(null);
-    }
-        
-    const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0
-
-    const minutesAmount = Math.floor(currentSeconds / 60)
-    const secondsAmount = currentSeconds % 60
-
-    const minutes = String(minutesAmount).padStart(2, '0')
-    const seconds = String(secondsAmount).padStart(2, '0')
-
-    useEffect(() => {
-        if (activeCycle) {
-            document.title = `${minutes}:${seconds}`
-        }
-    }, [minutes, seconds, activeCycle])
-
+           
     const task = watch('task')
     const isSubmitDisabled = !task;
+
+    /**
+     * Prop Drilling -> Qunado a gente tem MUITAS propriedade APENAS para comunicação entre componentes
+     * Context API -> Permite compartilhamos informações entre VÁRIOS componentes ao mesmo tempo
+     */
 
     return (
         <HomeContainer>
             <form onSubmit={handleSubmit(handleCreateNewCycle)} action="">
-                <NewCycleForm /> {/*  importado de outra pasta */}
-                <Countdown {/*  importado de outra pasta */}
-                    activeCycle={activeCycle} 
-                    setCycles={setCycles} 
-                    activeCycleId={activeCycleId}
-                /> 
+
+                <FormProvider {...newCycleForm}>
+                    <NewCycleForm />  {/* importado de outra pasta */}
+                </FormProvider>
+                <Countdown /> {/*  importado de outra pasta */}
+               
 
                 { activeCycle ? (
-                    <StopCountdownButton onClick={handleInterruptCycle} type="button">
+                    <StopCountdownButton onClick={interruptCurrentCycle} type="button">
                         <HandPalm size={24} />
                         Interromper
                     </StopCountdownButton>
 
                 ) : (
-                    <StartCountdownButton disabled={isSubmitDisabled}   type="submit">
+                    <StartCountdownButton disabled={isSubmitDisabled} type="submit">
                         <Play size={24} />
-                        começar
+                        Começar
                     </StartCountdownButton>
                 )}
 
